@@ -1,0 +1,98 @@
+=== AND-gate junction optimization with ProteinMPNN ===
+
+Original CompA junction (79-93): RKMGGSGGSGGSMNK
+Original CompB junction (75-89): GLLGGSGGSGGSTEE
+Running ProteinMPNN ...
+----------------------------------------
+chain_id_jsonl is NOT loaded
+----------------------------------------
+pssm_jsonl is NOT loaded
+----------------------------------------
+omit_AA_jsonl is NOT loaded
+----------------------------------------
+bias_AA_jsonl is NOT loaded
+----------------------------------------
+tied_positions_jsonl is NOT loaded
+----------------------------------------
+bias by residue dictionary is not loaded, or not provided
+----------------------------------------
+----------------------------------------
+Number of edges: 48
+Training noise level: 0.2A
+Generating sequences for: complex
+20 sequences of length 531 generated in 44.03 seconds
+Parsed 21 MPNN sequences
+
+Top 10 by MPNN score → Boltz-2 validation:
+
+[1/10] MPNN score=0.834
+  CompA junction: RKKAGGGGGAAENSA  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLVGSGPGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.489  BRD4-cf=0.210  PASS
+
+[2/10] MPNN score=0.836
+  CompA junction: RKTAGGGGGGAENSA  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLIGSGPGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.373  BRD4-cf=0.217  PASS
+
+[3/10] MPNN score=0.843
+  CompA junction: RKTAGGGGGAVENSE  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLEGWGPGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.405  BRD4-cf=0.189  PASS
+
+[4/10] MPNN score=0.844
+  CompA junction: RRTAGGGGGASENSE  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLIGSGPGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.415  BRD4-cf=0.231  PASS
+
+[5/10] MPNN score=0.845
+  CompA junction: RKTAGGGGGAAENSA  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLIGSGPGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.440  BRD4-cf=0.217  PASS
+
+[6/10] MPNN score=0.848
+  CompA junction: RKTSGGGGGAAENSE  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLEGSGPGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.403  BRD4-cf=0.196  PASS
+
+[7/10] MPNN score=0.852
+  CompA junction: RRTAGGGGGAAENSE  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLEGSGPGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.444  BRD4-cf=0.238  PASS
+
+[8/10] MPNN score=0.856
+  CompA junction: RKTAGGGGGGVENSA  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLIGSGRGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.449  BRD4-cf=0.231  PASS
+
+[9/10] MPNN score=0.857
+  CompA junction: RKTAGGGGGGAENTE  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLEGSGPGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.381  BRD4-cf=0.196  PASS
+
+[10/10] MPNN score=0.857
+  CompA junction: RKTSGGGGGGAENSA  (orig: RKMGGSGGSGGSMNK)
+  CompB junction: EGLLEGSGPGGEPTE  (orig: GLLGGSGGSGGSTEE)
+  Boltz-2: ipTM=0.389  BRD4-cf=0.196  PASS
+
+
+=== Junction optimization summary ===
+ Rk    ipTM     CF  CompA junction     CompB junction
+-----------------------------------------------------------------
+  1   0.489  0.210 ✓  RKKAGGGGGAAENSA  EGLLVGSGPGGEPTE
+  2   0.449  0.231 ✓  RKTAGGGGGGVENSA  EGLLIGSGRGGEPTE
+  3   0.444  0.238 ✓  RRTAGGGGGAAENSE  EGLLEGSGPGGEPTE
+  4   0.440  0.217 ✓  RKTAGGGGGAAENSA  EGLLIGSGPGGEPTE
+  5   0.415  0.231 ✓  RRTAGGGGGASENSE  EGLLIGSGPGGEPTE
+  6   0.403  0.196 ✓  RKTSGGGGGAAENSE  EGLLEGSGPGGEPTE
+  7   0.405  0.189 ✓  RKTAGGGGGAVENSE  EGLLEGWGPGGEPTE
+  8   0.389  0.196 ✓  RKTSGGGGGGAENSA  EGLLEGSGPGGEPTE
+  9   0.381  0.196 ✓  RKTAGGGGGGAENTE  EGLLEGSGPGGEPTE
+ 10   0.373  0.217 ✓  RKTAGGGGGGAENSA  EGLLIGSGPGGEPTE
+
+Saved → /mnt/d/gbm-ANDGATE/results/junction_optimization.tsv
+Best optimized sequences → /mnt/d/gbm-ANDGATE/results/andgate_optimized.fasta
+
+Lead: ipTM=0.489  BRD4-cf=0.210
+  CompA: PKKKRKVGGSPYEIPEEDKEWDEYSFAMVEVHERLMEAERQLRLLSPEEEEKKRELEEEIERARKELEEVHKRGEAIERKKAGGGGGAAENSASIEELLEELRKKFKEN
+  CompB: /PKKKRKVGGSMEEVRELLERARELEEKVRELEDDPSKREERERLLEEAERLREEALDLLVEQIREPLLQWMREEGLLVGSGPGGEPTEENKEKMLKELEERSEQYKEAALKFGESEEKAEEVKEYSLKLNEQVKEGWKANNQ
