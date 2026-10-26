@@ -1,0 +1,4 @@
+validation/boltz_outputs/
+__pycache__/
+*.pyc
+.DS_Store
