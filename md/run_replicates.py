@@ -64,10 +64,13 @@ def setup_rep(rep_dir, seed):
 
 def run_prod(rep_dir):
     print("  grompp...")
-    gmx_run("grompp -f prod_newvel.mdp -c npt.gro -p topol.top -o prod.tpr -maxwarn 2",
-            log=rep_dir / "grompp_prod.log", cwd=rep_dir)
+    if not (rep_dir / "prod.tpr").exists():
+        gmx_run("grompp -f prod_newvel.mdp -c npt.gro -p topol.top -o prod.tpr -maxwarn 2",
+                log=rep_dir / "grompp_prod.log", cwd=rep_dir)
     print("  mdrun (50 ns)...")
-    gmx_run("mdrun -v -deffnm prod -ntmpi 1 -ntomp 8 -gpu_id 0 -nb gpu -pme gpu -bonded gpu",
+    cpt = rep_dir / "prod.cpt"
+    cpi = f"-cpi {cpt}" if cpt.exists() else ""
+    gmx_run(f"mdrun -v -deffnm prod {cpi} -ntmpi 1 -ntomp 8 -gpu_id 0 -nb gpu -pme gpu -bonded gpu",
             log=rep_dir / "mdrun_prod.log", cwd=rep_dir)
     set_state(rep_dir, "PROD_DONE")
 

@@ -1,0 +1,10 @@
+{
+  "rep": "rep2",
+  "n_frames": 5001,
+  "time_ns": 50.01,
+  "cf_sox2_mean": 0.2243896899632419,
+  "cf_sox9_mean": 0.1526032455846493,
+  "cf_brd4_mean": 0.41887148886012265,
+  "pct_brd4_pass": 100.0,
+  "pass": true
+}

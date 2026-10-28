@@ -7,7 +7,7 @@ Spun out from **gbm-RIPTAC** (Route 1 AND-gate extension), 2026-10-26.
 
 ---
 
-## Current Status (2026-10-26)
+## Current Status (2026-10-28) — MD Complete ✅
 
 ### ✅ Computational validation complete
 
@@ -34,6 +34,19 @@ Spun out from **gbm-RIPTAC** (Route 1 AND-gate extension), 2026-10-26.
 | v3 (pos 46) | FULL | 0.395 | 0.162 | ✓ (leakage v3-NO_B=0.059) |
 
 **Winner: v1 (split at pos 19)** — clean AND-gate, zero BRD4 contact when either component absent.
+
+### GROMACS MD — 3 × 50 ns ✅ ALL PASS
+
+5-chain complex (CompA + CompB + SOX2 + SOX9 + BRD4), full reconstituted AND-gate.
+
+| Rep | SOX2 CF | SOX9 CF | BRD4 CF | % frames BRD4 pass |
+|-----|---------|---------|---------|---------------------|
+| rep1 | 0.189 | 0.162 | 0.430 | **100.0%** |
+| rep2 | 0.224 | 0.153 | 0.419 | **100.0%** |
+| rep3 | 0.166 | 0.144 | 0.366 | **100.0%** |
+| **Mean** | **0.193** | **0.153** | **0.405** | **100.0%** |
+
+BRD4 reconstituted binding is stable across 100% of frames in all three replicates. **PASS.**
 
 ### Final constructs (v1)
 
@@ -73,10 +86,11 @@ Normal cell (SOX2 only or SOX9 only):
 ## Aims
 
 1. ✅ **Aim 1 — Computational validation** (done 2026-10-26)
-2. ⏳ **Aim 2 — Junction optimization** — ProteinMPNN redesign of GGS3–frag junctions
-3. ⏳ **Aim 3 — Expression** — HEK293T expression, nuclear localization, SOX co-IP
-4. ⏳ **Aim 4 — Reconstitution assay** — Co-expression in GSC vs NPC, BRD4 ChIP, viability
-5. ⏳ **Aim 5 — Orthogonality** — BRD4 function in non-GSC contexts
+2. ✅ **MD simulation** — 3×50 ns GROMACS, BRD4 CF=0.405 at 100% frames (done 2026-10-28)
+3. ⏳ **Aim 2 — Junction optimization** — ProteinMPNN redesign of GGS3–frag junctions
+4. ⏳ **Aim 3 — Expression** — HEK293T expression, nuclear localization, SOX co-IP
+5. ⏳ **Aim 4 — Reconstitution assay** — Co-expression in GSC vs NPC, BRD4 ChIP, viability
+6. ⏳ **Aim 5 — Orthogonality** — BRD4 function in non-GSC contexts
 
 ---
 
@@ -94,18 +108,23 @@ gbm-ANDGATE/
 │   └── build_andgate.py          Generate component sequences (all split variants)
 ├── validation/
 │   └── validate_andgate.py       Boltz-2 FULL/NO_A/NO_B validation
-└── results/
-    ├── andgate_final.fasta        Final CompA + CompB sequences (v1)
-    ├── andgate_constructs.tsv     All split site constructs
-    └── andgate_validation.tsv    Boltz-2 results (9 jobs)
+├── results/
+│   ├── andgate_final.fasta        Final CompA + CompB sequences (v1)
+│   ├── andgate_constructs.tsv     All split site constructs
+│   └── andgate_validation.tsv    Boltz-2 results (9 jobs)
+└── md/
+    ├── run_andgate_md.py          Rep1 pipeline (resumable)
+    ├── run_replicates.py          Rep2+3
+    ├── results/                   Tracked metrics (rep1–3)
+    └── mdp/                      GROMACS parameter files (50 ns)
 ```
 
 ---
 
 ## Next Steps
 
-1. **ProteinMPNN junction optimization**: redesign the 5 residues flanking the split site in each component to improve folding and reconstitution affinity
-2. **MD simulation**: 50 ns GROMACS on the FULL 5-chain complex to confirm stability
+1. ✅ **MD simulation**: 3×50 ns complete, BRD4 CF=0.405 at 100% frames
+2. **ProteinMPNN junction optimization**: redesign the 5 residues flanking the split site in each component to improve folding and reconstitution affinity
 3. **Codon optimization** for mammalian expression (IDT codon tool or python-codon-tables)
 4. **Order synthetic genes** — two separate expression constructs (separate plasmids, same promoter)
 5. **Phase 1 lab validation** (Aim 3)
