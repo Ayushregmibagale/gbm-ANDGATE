@@ -87,7 +87,7 @@ Normal cell (SOX2 only or SOX9 only):
 
 1. ✅ **Aim 1 — Computational validation** (done 2026-10-26)
 2. ✅ **MD simulation** — 3×50 ns GROMACS, BRD4 CF=0.405 at 100% frames (done 2026-10-28)
-3. ⏳ **Aim 2 — Junction optimization** — ProteinMPNN redesign of GGS3–frag junctions
+3. ⚠️ **Aim 2 — Junction optimization** — see findings below (done 2026-10-28)
 4. ⏳ **Aim 3 — Expression** — HEK293T expression, nuclear localization, SOX co-IP
 5. ⏳ **Aim 4 — Reconstitution assay** — Co-expression in GSC vs NPC, BRD4 ChIP, viability
 6. ⏳ **Aim 5 — Orthogonality** — BRD4 function in non-GSC contexts
@@ -123,8 +123,39 @@ gbm-ANDGATE/
 
 ## Next Steps
 
+### Aim 2 — ProteinMPNN Junction Optimization (2026-10-28)
+
+Ran ProteinMPNN on the 5-chain FULL complex (20 junction designs), then validated all 20 with
+Boltz-2 FULL + NO_B + NO_A conditions.
+
+**Result: all top-5 designs by FULL BRD4-CF fail AND-gate validation.**
+
+| Design | FULL CF | NO_B CF | NO_A CF | Result |
+|--------|---------|---------|---------|--------|
+| seq08 | 0.487 | 0.421 | 0.439 | fail |
+| seq12 | 0.461 | 0.474 | 0.474 | fail |
+| seq14 | 0.461 | 0.316 | 0.386 | fail |
+| seq20 | 0.461 | 0.579 | 0.439 | fail |
+| seq01 | 0.447 | 0.421 | 0.456 | fail |
+
+**Root cause**: the MPNN fixed positions included BRD4-fragment N-terminal residues (frag_N pos
+91-93 of CompA; frag_C pos 87-89 of CompB). Redesigning these residues improved reconstituted
+complex assembly but inadvertently stabilized individual fragment BRD4 binding → leakage.
+The original v1 split design has 0.000 leakage because the natural fragment N-termini are
+unfavourable for BRD4 contact in isolation.
+
+**Fix (Aim 2b)**: constrained MPNN — fix all BRD4-fragment residues (A91-109 and B87-143);
+only redesign the GGS3 linker and binder C-terminus (A78-90, B75-86).
+
+**Decision**: proceed to Phase 1 lab with **original v1 design** (zero leakage,
+BRD4-CF=0.405 at 100% of MD frames). Run Aim 2b constrained MPNN as follow-up.
+
+---
+
+## Next Steps
+
 1. ✅ **MD simulation**: 3×50 ns complete, BRD4 CF=0.405 at 100% frames
-2. **ProteinMPNN junction optimization**: redesign the 5 residues flanking the split site in each component to improve folding and reconstitution affinity
+2. ⚠️ **Aim 2b (constrained MPNN)**: fix BRD4-frag residues; only redesign GGS3 + binder C-term
 3. **Codon optimization** for mammalian expression (IDT codon tool or python-codon-tables)
 4. **Order synthetic genes** — two separate expression constructs (separate plasmids, same promoter)
 5. **Phase 1 lab validation** (Aim 3)
