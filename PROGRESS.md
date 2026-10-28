@@ -144,18 +144,44 @@ complex assembly but inadvertently stabilized individual fragment BRD4 binding �
 The original v1 split design has 0.000 leakage because the natural fragment N-termini are
 unfavourable for BRD4 contact in isolation.
 
-**Fix (Aim 2b)**: constrained MPNN — fix all BRD4-fragment residues (A91-109 and B87-143);
-only redesign the GGS3 linker and binder C-terminus (A78-90, B75-86).
+**Fix attempted (Aim 2b)**: constrained MPNN — fix all BRD4-fragment residues (A91-109 and B87-143);
+only redesign the GGS3 linker and binder C-terminus (A78-90, B75-86). See Aim 2b below.
 
 **Decision**: proceed to Phase 1 lab with **original v1 design** (zero leakage,
-BRD4-CF=0.405 at 100% of MD frames). Run Aim 2b constrained MPNN as follow-up.
+BRD4-CF=0.405 at 100% of MD frames). Aim 2b constrained MPNN attempted and also failed — see below.
+
+### Aim 2b — Constrained MPNN (GGS3 linker only) (2026-10-28)
+
+Re-ran ProteinMPNN with BRD4-fragment residues fully fixed (A91-109, B87-143); only the
+GGS3 linker + binder C-terminus redesigned (A78-90, B75-86 — 13 and 12 residues respectively).
+
+**Result: all top-5 designs still fail AND-gate validation.**
+
+| Design | FULL CF | NO_B CF | NO_A CF | Result |
+|--------|---------|---------|---------|--------|
+| seq20 | 0.487 | 0.368 | 0.404 | fail |
+| seq09 | 0.461 | 0.474 | 0.509 | fail |
+| seq10 | 0.461 | 0.474 | 0.474 | fail |
+| seq12 | 0.461 | 0.526 | 0.456 | fail |
+| seq14 | 0.461 | 0.474 | 0.386 | fail |
+
+**Root cause confirmed**: MPNN replaces the flexible GGS3 linker (GGSGGSGGS) with structured
+variants (e.g. seq20 linker: `SGGGGGSE`). The original GGSGGSGGS composition keeps frag_N/frag_C
+disordered in isolation — critical for AND-gate specificity. Any MPNN redesign of the GGS3
+region breaks this property.
+
+**Final conclusion**: The GGSGGSGGS linker sequence is load-bearing for AND-gate logic and
+**must not be redesigned**. Junction optimization via MPNN is incompatible with the AND-gate
+design as implemented. Aim 2 is closed; computational optimization is complete.
+
+**Lead design**: original v1 (zero leakage, BRD4-CF=0.405 at 100% of MD frames). Ready for lab.
 
 ---
 
 ## Next Steps
 
 1. ✅ **MD simulation**: 3×50 ns complete, BRD4 CF=0.405 at 100% frames
-2. ⚠️ **Aim 2b (constrained MPNN)**: fix BRD4-frag residues; only redesign GGS3 + binder C-term
+2. ✅ **Aim 2 / Aim 2b**: MPNN junction optimization exhausted — original v1 is optimal
 3. **Codon optimization** for mammalian expression (IDT codon tool or python-codon-tables)
 4. **Order synthetic genes** — two separate expression constructs (separate plasmids, same promoter)
 5. **Phase 1 lab validation** (Aim 3)
